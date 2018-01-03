@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : MonoBehaviour
+{
 
     #region Variables
 
@@ -32,10 +31,10 @@ public class PlayerScript : MonoBehaviour {
 
     GameManagerScript gameManager;
 
-	#endregion
+    #endregion
 
-	void Start () 
-	{
+    void Start()
+    {
         fadeManager = GameObject.Find("FadeManager");
 
         shot = barrel.GetComponent<LineRenderer>();
@@ -43,27 +42,30 @@ public class PlayerScript : MonoBehaviour {
 
         shotLight = GameObject.Find("ShotLight").GetComponent<Light>();
         shotLight.enabled = false;
-	}
+    }
 
-    void Update () 
-	{
+    void FixedUpdate()
+    {
         // MOVEMENT
         #region Movement
 
         Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 normalized = dir.normalized;
-        Vector3 velocity = normalized * speed;
+        Vector3 velocity = normalized * speed / 70;
 
-        GetComponent<Rigidbody>().velocity = velocity;
+        GetComponent<Rigidbody>().MovePosition(transform.position + velocity);
         #endregion
+    }
 
+    void Update()
+    {
         //ROTATION
         #region Rotation
 
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity, floorLayerMask) && !pauseMenu.activeInHierarchy && !GameManagerScript.controllerConnected && !isDead)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, floorLayerMask) && !pauseMenu.activeInHierarchy && !GameManagerScript.controllerConnected && !isDead)
         {
             Vector3 lookDir = new Vector3(hit.point.x, hit.point.y, hit.point.z); ;
             lookDir.y = 1.87f;
@@ -72,7 +74,7 @@ public class PlayerScript : MonoBehaviour {
 
             playerModel.transform.eulerAngles = new Vector3(0, playerModel.transform.eulerAngles.y, 0);
 
-            Debug.DrawLine(ray.origin, hit.point, Color.red);              
+            Debug.DrawLine(ray.origin, hit.point, Color.red);
         }
         #endregion 
 
@@ -136,21 +138,31 @@ public class PlayerScript : MonoBehaviour {
         shot.SetPosition(1, hitPoint);
 
         // CHECK HIT OBJECT
-        if(coll.tag == "Enemy")
+        if (coll.tag == "Enemy")
         {
             coll.gameObject.SendMessage("LoseHealth");
-        }      
+        }
     }
     #endregion
 
-    // DAMAGE
-    #region Damage
+    // COLLISION
+    #region Collision
 
     void OnCollisionEnter(Collision coll)
     {
-        if(coll.gameObject.tag == "Enemy")
+        if (coll.gameObject.tag == "Enemy")
         {
             LoseHealth();
+        }
+    }
+
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.gameObject.tag == "Healthpack")
+        {
+            GainHealth();
+
+            Destroy(coll.gameObject);
         }
     }
 
@@ -165,6 +177,12 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    void GainHealth()
+    {
+        health = 3;
+        // Healthpack sound
+    }
+
     #endregion
 
     IEnumerator DeathCoroutine()
@@ -176,7 +194,7 @@ public class PlayerScript : MonoBehaviour {
 
         while (true)
         {
-            if(t < 1f)
+            if (t < 1f)
             {
                 Time.timeScale = Mathf.Lerp(1f, 0.5f, t);
                 t += Time.deltaTime / fadeTime;

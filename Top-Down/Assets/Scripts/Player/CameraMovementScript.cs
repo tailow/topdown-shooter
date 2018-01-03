@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraMovementScript : MonoBehaviour {
+public class CameraMovementScript : MonoBehaviour
+{
 
     #region Variables
 
@@ -13,10 +12,10 @@ public class CameraMovementScript : MonoBehaviour {
     Transform playerTransform;
     Transform cameraNewPosition;
 
-	#endregion
+    #endregion
 
-	void Start () 
-	{
+    void Start()
+    {
         // PLAYER TRANSFORM
         playerTransform = GameObject.Find("PlayerModel").GetComponent<Transform>();
 
@@ -24,9 +23,9 @@ public class CameraMovementScript : MonoBehaviour {
         cameraNewPosition = GameObject.Find("CameraNewPosition").GetComponent<Transform>();
 
     }
-	
-	void Update () 
-	{
+
+    void FixedUpdate()
+    {
         // LOOK AT PLAYER
         transform.LookAt(playerTransform);
 
