@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
-  m_AmbientEquatorColor: {r: 0.9117647, g: 0.86146045, b: 0.6972318, a: 1}
-  m_AmbientGroundColor: {r: 0.85294116, g: 0.7421425, b: 0.52054495, a: 1}
-  m_AmbientIntensity: 1.78
-  m_AmbientMode: 1
+  m_AmbientSkyColor: {r: 0.29258135, g: 0.2825476, b: 0.5735294, a: 1}
+  m_AmbientEquatorColor: {r: 0.9632353, g: 0.72291493, b: 0.5382786, a: 1}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_AmbientIntensity: 1.68
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.5808823, g: 0.5808823, b: 0.5808823, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 4067de1a02072244798361060c5e7325, type: 2}
   m_HaloStrength: 0.428
@@ -470,7 +470,7 @@ Camera:
   m_GameObject: {fileID: 211375797}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.43428886, g: 0.49264705, b: 0.2282115, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -487,14 +487,14 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &211375802
@@ -2832,13 +2832,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1244217535}
-  m_LocalRotation: {x: 0.1588907, y: 0.81889266, z: -0.2708228, w: 0.48044118}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalRotation: {x: 0.50508165, y: 0.052880634, z: -0.8608912, w: 0.031024866}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 861827252}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 36.6, y: -600.8, z: 0}
+  m_LocalEulerAnglesHint: {x: 172.97, y: -600.8, z: 0}
 --- !u!108 &1244217537
 Light:
   m_ObjectHideFlags: 0
@@ -2848,7 +2848,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.7794118, b: 0.44852942, a: 1}
+  m_Color: {r: 0.44852942, g: 0.61206895, b: 1, a: 1}
   m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
@@ -4027,6 +4027,60 @@ Prefab:
       value: 
       objectReference: {fileID: 1103069295406292, guid: b61795ec9f758134994ea7504adacafb,
         type: 2}
+    - target: {fileID: 4244514441772796, guid: efa115262ba418b40bbd202587feceb4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Range
+      value: 4.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.8896553
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.651
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Intensity
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200802050295286, guid: efa115262ba418b40bbd202587feceb4,
+        type: 2}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efa115262ba418b40bbd202587feceb4, type: 2}
   m_IsPrefabParent: 0
