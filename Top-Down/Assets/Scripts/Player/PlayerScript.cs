@@ -16,6 +16,10 @@ public class PlayerScript : MonoBehaviour
 
     public GameObject playerModel;
     public GameObject barrel;
+
+    public GameObject bulletWallHit;
+    public GameObject bulletEnemyHit;
+
     public LayerMask floorLayerMask;
 
     public GameObject pauseMenu;
@@ -141,6 +145,13 @@ public class PlayerScript : MonoBehaviour
         if (coll.tag == "Enemy")
         {
             coll.gameObject.SendMessage("LoseHealth");
+
+            Instantiate(bulletEnemyHit, hitPoint, Quaternion.identity);
+        }
+
+        else
+        {
+            Instantiate(bulletWallHit, hitPoint, Quaternion.identity);
         }
     }
     #endregion
@@ -179,7 +190,7 @@ public class PlayerScript : MonoBehaviour
 
     void GainHealth()
     {
-        health = 3;
+        health++;
         // Healthpack sound
     }
 
