@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerScript : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject deathScreen;
+    public GameObject UICanvas;
+
     GameObject fadeManager;
 
     public AudioSource shotAudio;
@@ -34,6 +37,8 @@ public class PlayerScript : MonoBehaviour
     Light shotLight;
 
     GameManagerScript gameManager;
+
+    public PostProcessingProfile ppProfile;
 
     #endregion
 
@@ -48,12 +53,17 @@ public class PlayerScript : MonoBehaviour
         shotLight.enabled = false;
 
         health = 3;
+
+        isDead = false;
     }
 
     void FixedUpdate()
     {
         // MOVEMENT
         #region Movement
+
+        if (isDead)
+            return;
 
         Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 normalized = dir.normalized;
@@ -167,7 +177,7 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.gameObject.tag == "Enemy")
+        if (coll.gameObject.tag == "Enemy" && !isDead)
         {
             LoseHealth();
         }
@@ -207,7 +217,7 @@ public class PlayerScript : MonoBehaviour
         float fadeTime = 2f;
         float t = 0;
 
-        fadeManager.SendMessage("FadeOut", fadeTime);
+        isDead = true;
 
         while (true)
         {
@@ -225,10 +235,11 @@ public class PlayerScript : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        isDead = true;
-
         GameObject.Find("GameManager").SendMessage("SetTexts");
+
+        ppProfile.depthOfField.enabled = true;
         deathScreen.SetActive(true);
+        UICanvas.SetActive(false);
 
         Time.timeScale = 0;
     }

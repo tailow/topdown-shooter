@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -36,6 +37,8 @@ public class GameManagerScript : MonoBehaviour
     public Text zombiesKilledText;
     public Text survivedWavesText;
     public Text timeSurvivedText;
+
+    public PostProcessingProfile ppProfile;
 
     GameObject[] enemySpawnPoints;
     GameObject[] healthpackSpawnPoints;
@@ -98,6 +101,9 @@ public class GameManagerScript : MonoBehaviour
 
             else if (Time.timeScale == 1)
                 Time.timeScale = 0;
+
+            ppProfile.depthOfField.enabled = !ppProfile.depthOfField.enabled;
+
         }
 
         // CHECK ZOMBIE COUNT
@@ -114,9 +120,9 @@ public class GameManagerScript : MonoBehaviour
 
         string time = string.Format("{0:0}:{1:00}", minutes, seconds);
 
-        timeSurvivedText.text = "Time survived: " + time;
-        zombiesKilledText.text = "Zombies killed: " + zombiesKilled;
-        survivedWavesText.text = "Waves survived: " + (waveCount - 1);
+        //timeSurvivedText.text = "Time survived: " + time;
+        //zombiesKilledText.text = "Zombies killed: " + zombiesKilled;
+        //survivedWavesText.text = "Waves survived: " + (waveCount - 1);
     }
 
     #region Enemy Spawning
