@@ -46,6 +46,8 @@ public class PlayerScript : MonoBehaviour
 
         shotLight = GameObject.Find("ShotLight").GetComponent<Light>();
         shotLight.enabled = false;
+
+        health = 3;
     }
 
     void FixedUpdate()

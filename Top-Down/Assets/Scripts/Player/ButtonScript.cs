@@ -1,14 +1,17 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class ButtonScript : MonoBehaviour {
+public class ButtonScript : MonoBehaviour
+{
 
     #region Variables
 
     GameObject fadeManager;
+
+    public GameObject menuCanvas;
+    public GameObject settingsCanvas;
+    public GameObject statisticsCanvas;
 
     #endregion
 
@@ -19,8 +22,6 @@ public class ButtonScript : MonoBehaviour {
 
     public void LoadGame()
     {
-        PlayerScript.health = 3;
-
         StopAllCoroutines();
         StartCoroutine("LoadGameCoroutine");
     }
@@ -30,19 +31,30 @@ public class ButtonScript : MonoBehaviour {
         Application.Quit();
     }
 
-    public void LoadSettings()
+    public void LoadMenuSettings()
     {
-        PlayerScript.health = 3;
+        menuCanvas.SetActive(false);
 
-        SceneManager.LoadScene("scene_settings");
+        settingsCanvas.SetActive(true);
+    }
+
+    public void LoadMenuStatistics()
+    {
+        menuCanvas.SetActive(false);
+
+        statisticsCanvas.SetActive(true);
     }
 
     public void LoadMenu()
     {
         SceneManager.LoadScene("scene_menu");
-        PlayerScript.health = 3;
 
         Time.timeScale = 1;
+
+        menuCanvas.SetActive(true);
+
+        statisticsCanvas.SetActive(false);
+        settingsCanvas.SetActive(false);
     }
 
     public void ContinueGame()
@@ -55,8 +67,6 @@ public class ButtonScript : MonoBehaviour {
     {
         Time.timeScale = 1;
         GameObject.Find("DeathScreen").SetActive(false);
-
-        PlayerScript.health = 3;
 
         SceneManager.LoadScene("scene_main");
     }
