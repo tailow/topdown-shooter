@@ -55,11 +55,11 @@ public class GameManagerScript : MonoBehaviour
         zombiesLeftText.GetComponent<TextMeshProUGUI>();
         #endregion
 
-        currentWaveText.SetText("Wave: <#FF8000>" + waveCount);
-        healthText.SetText("Health: <#FF8000>" + PlayerScript.health);
+        currentWaveText.SetText("Wave <#993399>" + waveCount);
+        healthText.SetText("Health <#993399>" + PlayerScript.health);
 
-        zombieWaveCount = waveCount * 5;
-        zombiesLeftText.SetText("Zombies left: <#FF8000>" + zombieWaveCount);
+        zombieWaveCount = waveCount * 4;
+        zombiesLeftText.SetText("Zombies left <#993399>" + zombieWaveCount);
 
         // ADDING SPAWNS TO LIST
         #region Spawn listing
@@ -103,8 +103,8 @@ public class GameManagerScript : MonoBehaviour
         // CHECK ZOMBIE COUNT
         zombieCount = GameObject.Find("Enemies").transform.childCount;
 
-        healthText.SetText("Health: <#FF8000>" + PlayerScript.health);
-        zombiesLeftText.SetText("Zombies left: <#FF8000>" + zombieWaveCount);
+        healthText.SetText("Health <#993399>" + PlayerScript.health);
+        zombiesLeftText.SetText("Zombies left <#993399>" + zombieWaveCount);
     }
 
     public void SetTexts()
@@ -135,7 +135,7 @@ public class GameManagerScript : MonoBehaviour
             zombieWaveCount = waveCount * 4 + 1;
         }
 
-        currentWaveText.SetText("Wave: <#FF8000>" + waveCount);
+        currentWaveText.SetText("Wave <#993399>" + waveCount);
 
         yield return new WaitForSeconds(4f);
 

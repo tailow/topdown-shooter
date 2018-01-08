@@ -146,12 +146,16 @@ public class PlayerScript : MonoBehaviour
         {
             coll.gameObject.SendMessage("LoseHealth");
 
-            Instantiate(bulletEnemyHit, hitPoint, Quaternion.identity);
+            var enemyHit = Instantiate(bulletEnemyHit, hitPoint, Quaternion.identity);
+
+            enemyHit.transform.parent = GameObject.Find("Particles").transform;
         }
 
         else
         {
-            Instantiate(bulletWallHit, hitPoint, Quaternion.identity);
+            var wallHit = Instantiate(bulletWallHit, hitPoint, Quaternion.identity);
+
+            wallHit.transform.parent = GameObject.Find("Particles").transform;
         }
     }
     #endregion
