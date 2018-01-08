@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class GameManagerScript : MonoBehaviour {
+public class GameManagerScript : MonoBehaviour
+{
 
     #region Variables
 
@@ -12,13 +12,18 @@ public class GameManagerScript : MonoBehaviour {
     int waveCount = 1;
     public static int zombiesKilled = 0;
 
-    int amountOfSpawns;
-    float timeBetweenSpawns = 0.5f;
+    int amountOfEnemySpawns;
+    int amountOfHealthpackSpawns;
+    float timeBetweenEnemySpawns = 0.5f;
+    float timeBetweenHealthpackSpawns = 30f;
+    int bossWaveInterval = 5;
 
     public static bool controllerConnected = false;
 
     public static int zombieWaveCount;
 
+    public GameObject healthpackPrefab;
+    public GameObject bossPrefab;
     public GameObject enemyPrefab;
     public GameObject pauseMenu;
 
@@ -32,7 +37,8 @@ public class GameManagerScript : MonoBehaviour {
     public Text survivedWavesText;
     public Text timeSurvivedText;
 
-    GameObject[] spawnPoints;
+    GameObject[] enemySpawnPoints;
+    GameObject[] healthpackSpawnPoints;
 
     #endregion
 
@@ -49,24 +55,36 @@ public class GameManagerScript : MonoBehaviour {
         zombiesLeftText.GetComponent<TextMeshProUGUI>();
         #endregion
 
-        currentWaveText.SetText("Wave: <#FF8000>" + waveCount);
-        healthText.SetText("Health: <#FF8000>" + PlayerScript.health);
+        currentWaveText.SetText("Wave <#993399>" + waveCount);
+        healthText.SetText("Health <#993399>" + PlayerScript.health);
 
-        zombieWaveCount = waveCount * 5;
-        zombiesLeftText.SetText("Zombies left: <#FF8000>" + zombieWaveCount);     
+        zombieWaveCount = waveCount * 4;
+        zombiesLeftText.SetText("Zombies left <#993399>" + zombieWaveCount);
 
         // ADDING SPAWNS TO LIST
         #region Spawn listing
-        amountOfSpawns = GameObject.Find("SpawnPoints").transform.childCount;
-        spawnPoints = new GameObject[amountOfSpawns];
 
-        for (int i = 0; i < amountOfSpawns; i++)
+        // Enemies
+        amountOfEnemySpawns = GameObject.Find("EnemySpawns").transform.childCount;
+        enemySpawnPoints = new GameObject[amountOfEnemySpawns];
+
+        for (int i = 0; i < amountOfEnemySpawns; i++)
         {
-            spawnPoints[i] = GameObject.Find("SpawnPoints").transform.GetChild(i).gameObject;
+            enemySpawnPoints[i] = GameObject.Find("EnemySpawns").transform.GetChild(i).gameObject;
+        }
+
+        // Healthpacks
+        amountOfHealthpackSpawns = GameObject.Find("HealthpackSpawns").transform.childCount;
+        healthpackSpawnPoints = new GameObject[amountOfHealthpackSpawns];
+
+        for (int i = 0; i < amountOfHealthpackSpawns; i++)
+        {
+            healthpackSpawnPoints[i] = GameObject.Find("HealthpackSpawns").transform.GetChild(i).gameObject;
         }
         #endregion
 
         StartCoroutine("StartNewWave");
+        StartCoroutine("SpawnHealthpacks");
     }
 
     void Update()
@@ -80,13 +98,13 @@ public class GameManagerScript : MonoBehaviour {
 
             else if (Time.timeScale == 1)
                 Time.timeScale = 0;
-        }      
+        }
 
         // CHECK ZOMBIE COUNT
         zombieCount = GameObject.Find("Enemies").transform.childCount;
 
-        healthText.SetText("Health: <#FF8000>" + PlayerScript.health);
-        zombiesLeftText.SetText("Zombies left: <#FF8000>" + zombieWaveCount);
+        healthText.SetText("Health <#993399>" + PlayerScript.health);
+        zombiesLeftText.SetText("Zombies left <#993399>" + zombieWaveCount);
     }
 
     public void SetTexts()
@@ -107,22 +125,46 @@ public class GameManagerScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(2f);
 
-        zombieWaveCount = waveCount * 5;
-        currentWaveText.SetText("Wave: <#FF8000>" + waveCount);
+        if (waveCount % bossWaveInterval != 0)
+        {
+            zombieWaveCount = waveCount * 4;
+        }
 
-        yield return new WaitForSeconds(4f);      
+        else
+        {
+            zombieWaveCount = waveCount * 4 + 1;
+        }
+
+        currentWaveText.SetText("Wave <#993399>" + waveCount);
+
+        yield return new WaitForSeconds(4f);
 
         // SPAWNING ENEMIES
-        for (int i = 0; i < waveCount * 5; i++)
+        if (waveCount % bossWaveInterval != 0)
         {
-            SpawnEnemy();
+            for (int i = 0; i < waveCount * 4; i++)
+            {
+                SpawnEnemy();
 
-            yield return new WaitForSeconds(timeBetweenSpawns);
+                yield return new WaitForSeconds(timeBetweenEnemySpawns);
+            }
+        }
+
+        else
+        {
+            SpawnBoss();
+
+            for (int i = 0; i < waveCount * 4; i++)
+            {
+                SpawnEnemy();
+
+                yield return new WaitForSeconds(timeBetweenEnemySpawns);
+            }
         }
 
         while (true)
         {
-            if(zombieCount == 0)
+            if (zombieCount == 0)
             {
                 waveCount++;
 
@@ -138,12 +180,45 @@ public class GameManagerScript : MonoBehaviour {
 
     void SpawnEnemy()
     {
-        int randomNumber = (int)Random.Range(0, amountOfSpawns);
+        int randomNumber = (int)Random.Range(0, amountOfEnemySpawns);
 
-        var enemy = Instantiate(enemyPrefab, spawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
+        var enemy = Instantiate(enemyPrefab, enemySpawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
 
         enemy.transform.parent = GameObject.Find("Enemies").transform;
+    }
 
+    void SpawnBoss()
+    {
+        int randomNumber = (int)Random.Range(0, amountOfEnemySpawns);
+
+        var boss = Instantiate(bossPrefab, enemySpawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
+
+        boss.transform.parent = GameObject.Find("Enemies").transform;
+    }
+
+    #endregion
+
+    #region Healthpack Spawning
+
+    IEnumerator SpawnHealthpacks()
+    {
+        // SPAWNING HEALTHPACKS
+
+        while (true)
+        {
+            SpawnHealthpack();
+
+            yield return new WaitForSeconds(timeBetweenHealthpackSpawns);
+        }
+    }
+
+    void SpawnHealthpack()
+    {
+        int randomNumber = (int)Random.Range(0, amountOfHealthpackSpawns);
+
+        var healthpack = Instantiate(healthpackPrefab, healthpackSpawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
+
+        healthpack.transform.parent = GameObject.Find("Healthpacks").transform;
     }
 
     #endregion

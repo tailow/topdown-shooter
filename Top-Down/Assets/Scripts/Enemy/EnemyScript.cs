@@ -1,28 +1,34 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyScript : MonoBehaviour {
+public class EnemyScript : MonoBehaviour
+{
 
     #region Variables
 
-    public float speed = 5f;
-    float health = 3f;
+    public float minSpeed = 3f;
+    public float maxSpeed = 6f;
+
+    float speed;
+    public float health = 3f;
 
     GameObject player;
     NavMeshAgent enemyAgent;
 
-	#endregion
+    #endregion
 
-	void Start ()
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
         enemyAgent = GetComponent<NavMeshAgent>();
-	}
-	
-	void Update ()
+
+        speed = Random.Range(minSpeed, maxSpeed);
+        enemyAgent.speed = speed;
+    }
+
+    void Update()
     {
         // MOVEMENT
         #region Movement
@@ -35,7 +41,7 @@ public class EnemyScript : MonoBehaviour {
     // COLLISION CHECK
     void OnCollisionEnter(Collision coll)
     {
-        if(coll.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player")
         {
             StartCoroutine("EnemyHitCoroutine");
         }
@@ -56,7 +62,7 @@ public class EnemyScript : MonoBehaviour {
     {
         health--;
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
 
