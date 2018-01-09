@@ -16,6 +16,9 @@ public class ButtonScript : MonoBehaviour
 
     GameObject canvasParent;
 
+    public GameObject pauseMenuCanvas;
+    public GameObject inGameSettingsCanvas;
+
     public PostProcessingProfile ppProfile;
 
     #endregion
@@ -53,16 +56,16 @@ public class ButtonScript : MonoBehaviour
 
     public void LoadSettings()
     {
-        SceneManager.LoadScene("scene_menu");
+        pauseMenuCanvas.SetActive(false);
 
-        InitializeCanvases();
+        inGameSettingsCanvas.SetActive(true);
+    }
 
-        menuCanvas.SetActive(false);
-        settingsCanvas.SetActive(true);
+    public void BackToPauseMenu()
+    {
+        pauseMenuCanvas.SetActive(true);
 
-        ppProfile.depthOfField.enabled = false;
-
-        Time.timeScale = 1;
+        inGameSettingsCanvas.SetActive(false);
     }
 
     public void LoadMenuSettings()
@@ -87,8 +90,6 @@ public class ButtonScript : MonoBehaviour
 
         statisticsCanvas.SetActive(false);
         settingsCanvas.SetActive(false);
-
-
     }
 
     public void LoadMenu()
