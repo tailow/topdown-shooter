@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour
     public LayerMask floorLayerMask;
 
     public GameObject pauseMenu;
+    public GameObject settingsMenu;
     public GameObject deathScreen;
     public GameObject UICanvas;
 
@@ -81,7 +82,7 @@ public class PlayerScript : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, floorLayerMask) && !pauseMenu.activeInHierarchy && !GameManagerScript.controllerConnected && !isDead)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, floorLayerMask) && !pauseMenu.activeInHierarchy && !GameManagerScript.controllerConnected && !isDead && !settingsMenu.activeInHierarchy)
         {
             Vector3 lookDir = new Vector3(hit.point.x, hit.point.y, hit.point.z); ;
             lookDir.y = 1.87f;
@@ -97,7 +98,7 @@ public class PlayerScript : MonoBehaviour
         // SHOOTING
         #region Shooting
 
-        if (Input.GetButtonDown("Fire1") && !pauseMenu.activeInHierarchy && !GameManagerScript.controllerConnected && !isDead)
+        if (Input.GetButtonDown("Fire1") && !pauseMenu.activeInHierarchy && !settingsMenu.activeInHierarchy && !GameManagerScript.controllerConnected && !isDead)
         {
             StartCoroutine("ShotCoroutine");
         }

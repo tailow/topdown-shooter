@@ -100,11 +100,6 @@ public class ButtonScript : MonoBehaviour
 
         Time.timeScale = 1;
 
-        menuCanvas.SetActive(true);
-
-        statisticsCanvas.SetActive(false);
-        settingsCanvas.SetActive(false);
-
         ppProfile.depthOfField.enabled = false;
     }
 

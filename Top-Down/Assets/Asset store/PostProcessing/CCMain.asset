@@ -16,7 +16,7 @@ MonoBehaviour:
     m_Settings:
       mode: 0
       depth:
-        scale: 1
+        scale: 0.234
       motionVectors:
         sourceOpacity: 1
         motionImageOpacity: 0
@@ -54,25 +54,25 @@ MonoBehaviour:
     m_Settings:
       reflection:
         blendType: 0
-        reflectionQuality: 2
-        maxDistance: 100
-        iterationCount: 256
-        stepSize: 3
-        widthModifier: 0.5
-        reflectionBlur: 1
+        reflectionQuality: 0
+        maxDistance: 101
+        iterationCount: 356
+        stepSize: 4
+        widthModifier: 1.04
+        reflectionBlur: 1.03
         reflectBackfaces: 0
       intensity:
-        reflectionMultiplier: 1
-        fadeDistance: 100
-        fresnelFade: 1
-        fresnelFadePower: 1
+        reflectionMultiplier: 0.95
+        fadeDistance: 318
+        fresnelFade: 0.431
+        fresnelFadePower: 3.59
       screenEdgeMask:
-        intensity: 0.03
+        intensity: 0.447
   depthOfField:
     m_Enabled: 0
     m_Settings:
       focusDistance: 0.1
-      aperture: 3.8
+      aperture: 4.6
       focalLength: 50
       useCameraFov: 1
       kernelSize: 3
@@ -94,7 +94,7 @@ MonoBehaviour:
       adaptationType: 0
       speedUp: 2
       speedDown: 1
-      logMin: -8
+      logMin: -4
       logMax: 4
   bloom:
     m_Enabled: 1
