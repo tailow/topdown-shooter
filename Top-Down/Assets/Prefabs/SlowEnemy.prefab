@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114085350007846438}
   - component: {fileID: 195396119968454616}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: SlowEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6883c1bca36bb4d88383a4da8c08fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  minSpeed: 3
+  maxSpeed: 6
+  health: 3
 --- !u!136 &136978942947603468
 CapsuleCollider:
   m_ObjectHideFlags: 1

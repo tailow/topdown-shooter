@@ -207,7 +207,11 @@ public class PlayerScript : MonoBehaviour
 
     void GainHealth()
     {
-        health++;
+        if (health < 3)
+        {
+            health++;
+        }
+
         // Healthpack sound
     }
 

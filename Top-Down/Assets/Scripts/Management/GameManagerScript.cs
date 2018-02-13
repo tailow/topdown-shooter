@@ -25,7 +25,8 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject healthpackPrefab;
     public GameObject bossPrefab;
-    public GameObject enemyPrefab;
+    public GameObject slowEnemyPrefab;
+    public GameObject fastEnemyPrefab;
     public GameObject pauseMenu;
 
     GameObject fadeManager;
@@ -148,9 +149,13 @@ public class GameManagerScript : MonoBehaviour
         // SPAWNING ENEMIES
         if (waveCount % bossWaveInterval != 0)
         {
-            for (int i = 0; i < waveCount * 4; i++)
+            for (int i = 0; i < waveCount * 2; i++)
             {
-                SpawnEnemy();
+                SpawnSlowEnemy();
+
+                yield return new WaitForSeconds(timeBetweenEnemySpawns);
+
+                SpawnFastEnemy();
 
                 yield return new WaitForSeconds(timeBetweenEnemySpawns);
             }
@@ -160,9 +165,13 @@ public class GameManagerScript : MonoBehaviour
         {
             SpawnBoss();
 
-            for (int i = 0; i < waveCount * 4; i++)
+            for (int i = 0; i < waveCount * 2; i++)
             {
-                SpawnEnemy();
+                SpawnSlowEnemy();
+
+                yield return new WaitForSeconds(timeBetweenEnemySpawns);
+
+                SpawnFastEnemy();
 
                 yield return new WaitForSeconds(timeBetweenEnemySpawns);
             }
@@ -184,11 +193,20 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
-    void SpawnEnemy()
+    void SpawnSlowEnemy()
     {
         int randomNumber = (int)Random.Range(0, amountOfEnemySpawns);
 
-        var enemy = Instantiate(enemyPrefab, enemySpawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
+        var enemy = Instantiate(slowEnemyPrefab, enemySpawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
+
+        enemy.transform.parent = GameObject.Find("Enemies").transform;
+    }
+
+    void SpawnFastEnemy()
+    {
+        int randomNumber = (int)Random.Range(0, amountOfEnemySpawns);
+
+        var enemy = Instantiate(fastEnemyPrefab, enemySpawnPoints[randomNumber].transform.position, Quaternion.Euler(0, 0, 0));
 
         enemy.transform.parent = GameObject.Find("Enemies").transform;
     }
